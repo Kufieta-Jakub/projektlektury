@@ -29,6 +29,15 @@ function App() {
       .catch(error => console.error('Błąd pobierania motywów:', error));
   }, []);
 
+  const handleShowSelection = () => {
+    if (category === "Lektury") {
+      console.log("Wybrana lektura:", selectedBook);
+    } else {
+      console.log("Wybrany motyw:", selectedTheme);
+    }
+  };
+  
+
   return (
     <div className="App d-flex justify-content-center align-items-center vh-100">
       <div className="form-box p-4 bg-white rounded shadow">
@@ -67,7 +76,7 @@ function App() {
         </select>
 
         <br />
-        <button type="submit" className="btn btn-primary w-100">Pokaż</button>
+        <button type="submit" className="btn btn-primary w-100" onClick={handleShowSelection}>Pokaż</button>
       </div>
     </div>
   );

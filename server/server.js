@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const mysql = require('mysql2/promise'); // Wersja promise
 const cors = require('cors');
@@ -14,7 +15,6 @@ app.use(cors({
 app.use(express.json());
 
 
-require('dotenv').config();
 
 const db = mysql.createPool({
     host: process.env.DB_HOST,
@@ -22,7 +22,6 @@ const db = mysql.createPool({
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
 });
-
 
 // Endpoint, który zwraca listę książek
 app.get('/api/books', async (req, res) => {
