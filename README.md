@@ -8,6 +8,7 @@ Tworzysz projekt react w środowisku np VSC
 
 ### `npx create-react-app .` (kropka lub ścieżka)
 
+### `npm start`
 Odpala sie lokalnie na porcie 3000 tak jak poniżej
 Otwórz [http://localhost:3000](http://localhost:3000) w przeglądarce
 
