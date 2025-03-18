@@ -111,7 +111,7 @@ function App() {
               <h5>Lektury powiązane z motywem</h5>
               <ul>
                 {details.map((detail, index) => (
-                  <li key={index}>{detail.Nazwa}</li>
+                  <li key={index}>"{detail.Nazwa}" ({detail.Autor})</li>
                 ))}
               </ul>
             </div> )

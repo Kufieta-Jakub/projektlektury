@@ -72,7 +72,7 @@ app.get('/api/book/:name', async (req, res) => {
   
     try {
       const [rows] = await db.query(
-        'SELECT Nazwa FROM lektura INNER JOIN powiazania ON lektura.ID_lektury=powiazania.ID_Lektury INNER JOIN motyw ON powiazania.ID_motywu=motyw.ID_motywu WHERE motyw.Nazwa_motywu = ?',
+        'SELECT Nazwa, lektura.Autor FROM lektura INNER JOIN powiazania ON lektura.ID_lektury=powiazania.ID_Lektury INNER JOIN motyw ON powiazania.ID_motywu=motyw.ID_motywu WHERE motyw.Nazwa_motywu = ?',
          [decodedName]);
       res.json(rows); // Zwróć dane motywu
     } catch (err) {
