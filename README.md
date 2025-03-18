@@ -27,3 +27,12 @@ ja mam łączoną zdalnie np plik .env i wpisz sobie te:
 DB_HOST= wpisz np `localhost` albo coś
 
 ### A tu kilka screnów jak aplikacja działa
+![](screenshots/screen1.png)
+![](screenshots/screen2.png)
+![](screenshots/screen3.png)
+![](screenshots/screen4.png)
+![](screenshots/screen5.png)
+![](screenshots/screen6.png)
+![](screenshots/screen7.png)
+![](screenshots/screen8.png)
+![](screenshots/screen9.png)
