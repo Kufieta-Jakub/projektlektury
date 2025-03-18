@@ -9,6 +9,7 @@ function App() {
   const [selectedBook, setSelectedBook] = useState(""); // Wybrana lektura
   const [selectedTheme, setSelectedTheme] = useState(""); // Wybrany motyw
   const [category, setCategory] = useState("Lektury"); // Kategoria: "Lektury" lub "Motywy"
+  const [details, setDetails] = useState(null); // Dane, które będą wyświetlane po kliknięciu
 
   useEffect(() => {
     // Pobieranie danych o książkach
@@ -30,12 +31,26 @@ function App() {
   }, []);
 
   const handleShowSelection = () => {
-    if (category === "Lektury") {
-      console.log("Wybrana lektura:", selectedBook);
-    } else {
-      console.log("Wybrany motyw:", selectedTheme);
+    if (category === "Lektury" && selectedBook) {
+      // Kodowanie parametru przed wysłaniem zapytania
+      const encodedBook = encodeURIComponent(selectedBook);
+      axios.get(`http://localhost:5910/api/book/${encodedBook}`)
+        .then(response => {
+          setDetails(response.data); // Zaktualizuj stan z danymi książki
+        })
+        .catch(error => console.error('Błąd pobierania książki:', error));
+    } else if (category === "Motywy" && selectedTheme) {
+      // Kodowanie parametru przed wysłaniem zapytania
+      const encodedTheme = encodeURIComponent(selectedTheme);
+      axios.get(`http://localhost:5910/api/theme/${encodedTheme}`)
+        .then(response => {
+          setDetails(response.data); // Zaktualizuj stan z danymi motywu
+        })
+        .catch(error => console.error('Błąd pobierania motywu:', error));
     }
   };
+  
+  
   
 
   return (
@@ -48,7 +63,7 @@ function App() {
           <option value="Lektury">Lektury</option>
           <option value="Motywy">Motywy</option>
         </select>
-
+  
         {/* Wybór konkretnej pozycji (lektura lub motyw) */}
         <select
           className="form-select"
@@ -74,12 +89,37 @@ function App() {
                 </option>
               ))}
         </select>
-
+  
         <br />
         <button type="submit" className="btn btn-primary w-100" onClick={handleShowSelection}>Pokaż</button>
+  
+        
       </div>
+      {/* Sekcja wyświetlania szczegółów */}
+      {category === "Lektury" 
+      ? details && (
+          <div className="form-select">
+            <h5>Motywy powiązane z lekturą</h5>
+            <ul>
+              {details.map((detail, index) => (
+                <li key={index}>{detail.Nazwa_motywu}</li>
+              ))}
+            </ul>
+          </div> )
+          :details && (
+            <div className="form-select">
+              <h5>Lektury powiązane z motywem</h5>
+              <ul>
+                {details.map((detail, index) => (
+                  <li key={index}>{detail.Nazwa}</li>
+                ))}
+              </ul>
+            </div> )
+
+        }
     </div>
+    
   );
-}
+}  
 
 export default App;

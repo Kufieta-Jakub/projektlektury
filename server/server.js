@@ -48,6 +48,41 @@ app.get('/api/themes', async (req, res) => {
     }
 });
 
+// Endpoint do pobierania szczegółów książki
+// Endpoint do pobierania szczegółów książki
+app.get('/api/book/:name', async (req, res) => {
+    const { name } = req.params;
+    const decodedName = decodeURIComponent(name); // Dekodowanie nazwy książki
+  
+    try {
+      const [rows] = await db.query(
+        'SELECT Nazwa_motywu FROM motyw INNER JOIN powiazania ON motyw.ID_motywu=powiazania.ID_motywu INNER JOIN lektura ON powiazania.ID_lektury=lektura.ID_lektury WHERE lektura.Nazwa = ?', 
+        [decodedName]);
+      res.json(rows); // Zwróć dane książki
+    } catch (err) {
+      console.error("Błąd zapytania:", err.message);
+      res.status(500).json({ error: err.message });
+    }
+  });
+  
+  // Endpoint do pobierania szczegółów motywu
+  app.get('/api/theme/:name', async (req, res) => {
+    const { name } = req.params;
+    const decodedName = decodeURIComponent(name); // Dekodowanie nazwy motywu
+  
+    try {
+      const [rows] = await db.query(
+        'SELECT Nazwa FROM lektura INNER JOIN powiazania ON lektura.ID_lektury=powiazania.ID_Lektury INNER JOIN motyw ON powiazania.ID_motywu=motyw.ID_motywu WHERE motyw.Nazwa_motywu = ?',
+         [decodedName]);
+      res.json(rows); // Zwróć dane motywu
+    } catch (err) {
+      console.error("Błąd zapytania:", err.message);
+      res.status(500).json({ error: err.message });
+    }
+  });
+  
+  
+
 // Serwowanie aplikacji React w produkcji
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, 'client/build')));
