@@ -3,6 +3,9 @@ const mysql = require('mysql2/promise'); // Wersja promise
 const cors = require('cors');
 const path = require('path');
 
+
+const PORT = process.env.PORT || 5910; //sprwadzanie lub sztywno ustawnie portu
+
 const app = express();
 app.use(cors({
     origin: '*',  // Zezwól na wszystkie źródła
@@ -10,14 +13,16 @@ app.use(cors({
   }));
 app.use(express.json());
 
-const PORT = process.env.PORT || 5910;
+
+require('dotenv').config();
 
 const db = mysql.createPool({
-    host: 'mysql2.small.pl',
-    user: 'm2532_admin',
-    password: 'Admin200521',
-    database: 'm2532_lektury',
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
 });
+
 
 // Endpoint, który zwraca listę książek
 app.get('/api/books', async (req, res) => {
